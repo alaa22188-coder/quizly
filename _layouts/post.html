@@ -1,20 +1,30 @@
 ---
 layout: default
 ---
-<!-- شريط التنقل Breadcrumb -->
+<!-- شريط التنقل Breadcrumb المطور ديناميكياً للسيو -->
 <div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+  
+  <!-- الرابط الأول: الرئيسية -->
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="{{ site.baseurl }}/" itemprop="item"><span itemprop="name">الرئيسية</span></a>
+    <a href="{{ site.baseurl }}/" itemprop="item">
+      <span itemprop="name">الرئيسية</span>
+    </a>
     <meta itemprop="position" content="1" />
   </span>
   <span>&rsaquo;</span>
+  
+  <!-- الرابط الثاني: القسم (يتولد الرابط تلقائياً بناءً على اسم التصنيف) -->
   {% if page.category %}
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="{{ site.baseurl }}/games/" itemprop="item"><span itemprop="name">{{ page.category }}</span></a>
+    <a href="{{ site.baseurl }}/{{ page.category | slugify: 'raw' }}/" itemprop="item">
+      <span itemprop="name">{{ page.category }}</span>
+    </a>
     <meta itemprop="position" content="2" />
   </span>
   <span>&rsaquo;</span>
   {% endif %}
+  
+  <!-- الجزء الأخير: اسم المقال الحالي (نص فقط بدون رابط) -->
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
     <strong itemprop="name">{{ page.title }}</strong>
     <meta itemprop="position" content="{% if page.category %}3{% else %}2{% endif %}" />
