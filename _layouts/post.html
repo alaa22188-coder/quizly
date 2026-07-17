@@ -1,8 +1,28 @@
 ---
 layout: default
 ---
+<!-- شريط التنقل Breadcrumb -->
+<div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a href="{{ site.baseurl }}/" itemprop="item"><span itemprop="name">الرئيسية</span></a>
+    <meta itemprop="position" content="1" />
+  </span>
+  <span>&rsaquo;</span>
+  {% if page.category %}
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <span itemprop="name">{{ page.category }}</span>
+    <meta itemprop="position" content="2" />
+  </span>
+  <span>&rsaquo;</span>
+  {% endif %}
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <strong itemprop="name">{{ page.title }}</strong>
+    <meta itemprop="position" content="{% if page.category %}3{% else %}2{% endif %}" />
+  </span>
+</div>
+
 <h2>{{ page.title }}</h2>
-<small>تم النشر في: {{ page.date | date: "%Y-%m-%d" }}</small>
+<small>التصنيف: {{ page.category | default: "عام" }} | تم النشر في: {{ page.date | date: "%Y-%m-%d" }}</small>
 <hr>
 
 <article>
@@ -10,4 +30,4 @@ layout: default
 </article>
 
 <br>
-<a href="/quizly/">&rarr; العودة للرئيسية</a>
+<a href="{{ site.baseurl }}/">&rarr; العودة للرئيسية</a>
