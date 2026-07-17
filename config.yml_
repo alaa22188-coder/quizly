@@ -1,4 +1,5 @@
 title: موقع ألعابي ومقالاتي
-description: هذا الموقع مبني باستخدام جيكل ومستضاف على جيت هب.
-theme: minima
+description: موقع ترفيهي يقدم ألعاب ستاتيك خفيفة واختبارات تفاعلية ممتعة ومقالات منوعة.
+url: "https://alaa22188-coder.github.io"
+baseurl: "/quizly"
 future: true
