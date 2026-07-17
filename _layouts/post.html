@@ -1,30 +1,27 @@
 ---
 layout: default
 ---
-<!-- شريط التنقل Breadcrumb المطور ديناميكياً للسيو -->
+<!-- استخراج الاسم العربي للتصنيف من القاموس -->
+{% assign category_slug = page.category %}
+{% assign category_name = site.categories_labels[category_slug] | default: category_slug %}
+
+<!-- شريط التنقل Breadcrumb المطور -->
 <div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
-  
-  <!-- الرابط الأول: الرئيسية -->
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="{{ site.baseurl }}/" itemprop="item">
-      <span itemprop="name">الرئيسية</span>
-    </a>
+    <a href="{{ site.baseurl }}/" itemprop="item"><span itemprop="name">الرئيسية</span></a>
     <meta itemprop="position" content="1" />
   </span>
   <span>&rsaquo;</span>
   
-  <!-- الرابط الثاني: القسم (يتولد الرابط تلقائياً بناءً على اسم التصنيف) -->
   {% if page.category %}
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="{{ site.baseurl }}/{{ page.category | slugify: 'raw' }}/" itemprop="item">
-      <span itemprop="name">{{ page.category }}</span>
-    </a>
+    <!-- الرابط سيتولد بالإنجليزية /games/ والاسم سيظهر بالعربية -->
+    <a href="{{ site.baseurl }}/{{ category_slug }}/" itemprop="item"><span itemprop="name">{{ category_name }}</span></a>
     <meta itemprop="position" content="2" />
   </span>
   <span>&rsaquo;</span>
   {% endif %}
   
-  <!-- الجزء الأخير: اسم المقال الحالي (نص فقط بدون رابط) -->
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
     <strong itemprop="name">{{ page.title }}</strong>
     <meta itemprop="position" content="{% if page.category %}3{% else %}2{% endif %}" />
@@ -32,17 +29,16 @@ layout: default
 </div>
 
 <h2>{{ page.title }}</h2>
-<small>التصنيف: {{ page.category | default: "عام" }} | تم النشر في: {{ page.date | date: "%Y-%m-%d" }}</small>
+<small>التصنيف: {{ category_name }} | تم النشر في: {{ page.date | date: "%Y-%m-%d" }}</small>
 <hr>
 
-<!-- محتوى المقال الأساسي -->
 <article>
   {{ content }}
 </article>
 
 <hr style="margin-top: 40px; border: 0; border-top: 1px solid #ccc;">
 
-<!-- قسم الروابط الداخلية المقترحة للسيو -->
+<!-- قسم الروابط الداخلية المحدث بالإنجليزية -->
 <div class="related-posts" style="margin-top: 30px;">
   <h3 style="color: #333; font-size: 20px; margin-bottom: 15px;">🎮 مقالات وألعاب ذات صلة قد تعجبك:</h3>
   <ul style="list-style: square; padding-right: 20px;">
@@ -57,21 +53,6 @@ layout: default
         {% assign count = count | plus: 1 %}
       {% endif %}
     {% endfor %}
-    
-    <!-- خيار احتياطي في حال عدم وجود مقالات كافية في نفس القسم، يجلب من باقي الموقع -->
-    {% if count == 0 %}
-      {% assign alt_count = 0 %}
-      {% for post in site.posts %}
-        {% if post.url != page.url and alt_count < 3 %}
-          <li style="margin-bottom: 10px; border: none; padding: 0;">
-            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #0076a3; font-size: 16px; font-weight: bold;">
-              {{ post.title }}
-            </a>
-          </li>
-          {% assign alt_count = alt_count | plus: 1 %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
   </ul>
 </div>
 
