@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "قسم ألعاب واختبارات"
-permalink: /tests/
+permalink: /games/
 ---
 
 # 🎮 قسم ألعاب واختبارات الترفيهية
