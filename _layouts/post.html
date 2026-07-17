@@ -10,7 +10,7 @@ layout: default
   <span>&rsaquo;</span>
   {% if page.category %}
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <span itemprop="name">{{ page.category }}</span>
+    <a href="{{ site.baseurl }}/games/" itemprop="item"><span itemprop="name">{{ page.category }}</span></a>
     <meta itemprop="position" content="2" />
   </span>
   <span>&rsaquo;</span>
@@ -25,9 +25,45 @@ layout: default
 <small>التصنيف: {{ page.category | default: "عام" }} | تم النشر في: {{ page.date | date: "%Y-%m-%d" }}</small>
 <hr>
 
+<!-- محتوى المقال الأساسي -->
 <article>
   {{ content }}
 </article>
+
+<hr style="margin-top: 40px; border: 0; border-top: 1px solid #ccc;">
+
+<!-- قسم الروابط الداخلية المقترحة للسيو -->
+<div class="related-posts" style="margin-top: 30px;">
+  <h3 style="color: #333; font-size: 20px; margin-bottom: 15px;">🎮 مقالات وألعاب ذات صلة قد تعجبك:</h3>
+  <ul style="list-style: square; padding-right: 20px;">
+    {% assign count = 0 %}
+    {% for post in site.categories[page.category] %}
+      {% if post.url != page.url and count < 3 %}
+        <li style="margin-bottom: 10px; border: none; padding: 0;">
+          <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #0076a3; font-size: 16px; font-weight: bold;">
+            {{ post.title }}
+          </a>
+        </li>
+        {% assign count = count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    
+    <!-- خيار احتياطي في حال عدم وجود مقالات كافية في نفس القسم، يجلب من باقي الموقع -->
+    {% if count == 0 %}
+      {% assign alt_count = 0 %}
+      {% for post in site.posts %}
+        {% if post.url != page.url and alt_count < 3 %}
+          <li style="margin-bottom: 10px; border: none; padding: 0;">
+            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #0076a3; font-size: 16px; font-weight: bold;">
+              {{ post.title }}
+            </a>
+          </li>
+          {% assign alt_count = alt_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>
 
 <br>
 <a href="{{ site.baseurl }}/">&rarr; العودة للرئيسية</a>
