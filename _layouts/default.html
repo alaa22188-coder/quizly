@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- العناوين والوصف الافتراضي والديناميكي -->
-    <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <!-- العناوين والوصف الافتراضي والديناميكي للسيو -->
+    <title>{% if page.title %}{{ page.title }} | موقع ألعابي ومقالاتي{% else %}موقع ألعابي ومقالاتي{% endif %}</title>
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
     
-    <!-- رابط الكانونيكال التلقائي (Canonical URL) -->
+    <!-- رابط الكانونيكال التلقائي المستند إلى الرابط الفعلي -->
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
     
-    <!-- بطاقات الميتا لمواقع التواصل الاجتماعي (Open Graph / Facebook / X) -->
-    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <!-- بطاقات الميتا لمواقع التواصل الاجتماعي (Open Graph) -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}موقع ألعابي ومقالاتي{% endif %}">
     <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
     <meta property="og:url" content="{{ page.url | absolute_url }}">
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
@@ -38,13 +38,18 @@
 <body>
 
     <header>
-        <h1>{{ site.title }}</h1>
+        <!-- فحص ذكي: إذا كنا في الرئيسية نظهر H1، في المقالات يظهر تصميم عادي لترك الـ H1 لعنوان المقال -->
+        {% if page.url == "/" or page.url == "/index.html" %}
+            <h1>موقع ألعابي ومقالاتي</h1>
+        {% else %}
+            <div style="font-size: 2em; font-weight: bold; margin-block-start: 0.67em; margin-block-end: 0.67em;">موقع ألعابي ومقالاتي</div>
+        {% endif %}
         <p>{{ site.description }}</p>
     </header>
 
     <nav>
-        <a href="/quizly/">الرئيسية</a>
-       <a href="{{ site.baseurl }}/games/">قسم الألعاب والاختبارات</a>
+        <a href="{{ site.baseurl }}/">الرئيسية</a>
+        <a href="{{ site.baseurl }}/games/">قسم الألعاب والاختبارات</a>
     </nav>
 
     <main>
@@ -52,7 +57,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 جميع الحقوق محفوظة</p>
+        <p>&copy; جميع الحقوق محفوظة </p>
     </footer>
 
 </body>
